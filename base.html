@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Raksha</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <img src="{{ url_for('static', filename='logo.png') }}" alt="Raksha Logo">
+    <h2>Raksha</h2>
+
+    {% if not session.user %}
+      <!-- For non-logged in users -->
+      <a href="{{ url_for('home') }}">Home</a>
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Register</a>
+      <a href="{{ url_for('about') }}">About</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+    {% else %}
+      <!-- For logged in users -->
+      <a href="{{ url_for('welcome') }}">Home</a>
+      <a href="{{ url_for('find_route') }}">Route Suggestion</a>
+      <a href="{{ url_for('report_crime') }}">Report Crime</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    {% endif %}
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+    {% block content %}{% endblock %}
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Raksha - Register</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="sidebar">
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Raksha Logo">
+        <h2>Raksha</h2>
+        <a href="{{ url_for('welcome') }}">Home</a>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+    </div>
+
+    <div class="main">
+        <h2>Register for Raksha</h2>
+        <div class="register-form">
+            <form method="POST">
+                <label>Full Name:</label>
+                <input type="text" name="name" required>
+
+                <label>Phone Number:</label>
+                <input type="text" name="phone_number" required>
+
+                <h3>Emergency Contact 1</h3>
+                <label>Name:</label>
+                <input type="text" name="emergency_contact_name" required>
+                <label>Phone Number:</label>
+                <input type="text" name="emergency_contact_phone" required>
+                <label>Email:</label>
+                <input type="email" name="emergency_contact_email" required>
+                <label>Relation:</label>
+                <select name="emergency_contact_relation" required>
+                    <option value="Mother">Mother</option>
+                    <option value="Father">Father</option>
+                    <option value="Guardian">Guardian</option>
+                    <option value="Relative">Relative</option>
+                    <option value="Friend">Friend</option>
+                    <option value="Partner">Partner</option>
+                    <option value="Wife/Husband">Wife/Husband</option>
+                </select>
+
+                <h3>Emergency Contact 2</h3>
+                <label>Name:</label>
+                <input type="text" name="emergency_contact2_name" required>
+                <label>Phone Number:</label>
+                <input type="text" name="emergency_contact2_phone" required>
+                <label>Email:</label>
+                <input type="email" name="emergency_contact2_email" required>
+                <label>Relation:</label>
+                <select name="emergency_contact2_relation" required>
+                    <option value="Mother">Mother</option>
+                    <option value="Father">Father</option>
+                    <option value="Guardian">Guardian</option>
+                    <option value="Relative">Relative</option>
+                    <option value="Friend">Friend</option>
+                    <option value="Partner">Partner</option>
+                    <option value="Wife/Husband">Wife/Husband</option>
+                </select>
+
+                <h3>App Credentials</h3>
+                <label>Username:</label>
+                <input type="text" name="username" required>
+                <label>Password:</label>
+                <input type="password" name="password" required>
+                <label>Trigger Word:</label>
+                <input type="text" name="trigger_word" required>
+                <label>Stop Word:</label>
+                <input type="text" name="stop_word" required>
+
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <div class="login-link">
+                Already have an account? <a href="{{ url_for('login') }}">Login</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

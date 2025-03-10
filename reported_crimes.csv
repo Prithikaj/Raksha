@@ -1,0 +1,17 @@
+location,incident_type,date,verified,location_encoded,incident_encoded
+Kavundampalayam,chainsnatch,2025-03-01,1,0,1
+Thudiyalur,Theft,2025-02-27,1,1,0
+Lakshmi mills,chainsnatch,2025-02-25,1,2,1
+GN Mills,Theft,2025-02-25,1,3,0
+GN Mills,Theft,2025-02-24,1,4,0
+Cheran Nagar,Theft,2025-02-23,0,5,0
+Cheran Nagar,Theft,2025-02-25,0,6,0
+Kavundampalayam,Theft,2025-03-03,1,7,0
+Kavundampalayam,Theft,2025-03-03,1,8,0
+Kavundampalayam,Theft,2025-03-03,0,9,0
+Lakshmi mills,Theft,2023-08-25,0,10,0
+Lakshmi mills,Theft,2023-08-25,0,11,0
+Lakshmi mills,Theft,2023-08-25,0,12,0
+gandhipuram,Theft,2023-08-24,0,13,0
+gandhipuram,Theft,2023-08-24,0,14,0
+gandhipuram,Theft,2023-08-24,0,15,0

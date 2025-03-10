@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Safe Route Finder</title>
+    <!-- Using Bootstrap for quick form styling (optional) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>🚦 Safe Route Finder 🚗</h1>
+        <p>Find the safest path & report crime incidents.</p>
+
+        <h2>🔍 Find Safe Routes</h2>
+        <form action="/find_route" method="GET">
+            <label for="start">Start Location:</label>
+            <input type="text" id="start" name="start" placeholder="Enter start location" required>
+
+            <label for="end">End Location:</label>
+            <input type="text" id="end" name="end" placeholder="Enter destination" required>
+
+            <button type="submit" class="btn">Find Safe Route</button>
+        </form>
+
+        <h2>🚨 Report a Crime</h2>
+        <a href="{{ url_for('report_crime') }}"><button class="btn">Report Incident</button></a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Safe Route Map</title>
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+
+  <style>
+    /* Remove body margin/padding, make it full height */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    /* The map container fills the entire screen (minus any sidebar if you have one) */
+    #map {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Map container -->
+  <div id="map"></div>
+
+  <script>
+    // Example: If you want a slight delay to ensure the map container is sized:
+    window.addEventListener("load", function() {
+      initMap();
+      setTimeout(function() {
+        myMap.invalidateSize(); // Fixes any sizing issues after load
+      }, 500);
+    });
+
+    let myMap;
+    function initMap() {
+      // Initialize the map
+      myMap = L.map("map").setView([11.0168, 76.9558], 13);
+
+      // Add OSM tiles
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: "© OpenStreetMap"
+      }).addTo(myMap);
+
+      // If you have safe_path, alternate_path, crime_locations, etc.,
+      // you can plot them here. Example:
+      const safePath = JSON.parse('{{ safe_path|tojson|safe }}');
+      if (safePath && safePath.length > 0) {
+        const poly = L.polyline(safePath.map(coord => [coord[0], coord[1]]), {
+          color: "blue",
+          weight: 5
+        }).addTo(myMap);
+        myMap.fitBounds(poly.getBounds());
+      }
+
+      const alternatePath = JSON.parse('{{ alternate_path|tojson|safe }}');
+      if (alternatePath && alternatePath.length > 0) {
+        const altPoly = L.polyline(alternatePath.map(coord => [coord[0], coord[1]]), {
+          color: "green",
+          weight: 5,
+          dashArray: "5, 10"
+        }).addTo(myMap);
+      }
+
+      const crimeLocations = JSON.parse('{{ crime_locations|tojson|safe }}');
+      if (crimeLocations && crimeLocations.length > 0) {
+        crimeLocations.forEach(function(loc) {
+          L.circleMarker([loc[0], loc[1]], {
+            radius: 6,
+            color: "red",
+            fillColor: "red",
+            fillOpacity: 0.7
+          }).addTo(myMap);
+        });
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h1>Welcome, {{ session.user.name }}!</h1>
+  <p>Your AI-powered emergency assistant for safety and protection.</p>
+
+  <!-- Button to manually trigger panic mode -->
+  <button id="panicButton" class="btn">Activate Panic Mode</button>
+
+  <!-- Video preview (hidden by default) -->
+  <video id="videoElement" autoplay style="display:none;"></video>
+
+  <script>
+    // Voice Recognition Setup
+    function startListening() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.continuous = true;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = function(event) {
+        const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase();
+        console.log("Detected voice input:", transcript);
+        const triggerWord = "{{ session.user.trigger_word|lower }}";
+        const stopWord = "{{ session.user.stop_word|lower }}";
+
+        if (transcript.includes(triggerWord)) {
+          activateEmergency();
+        }
+        if (transcript.includes(stopWord)) {
+          stopEmergency();
+        }
+      };
+      recognition.start();
+    }
+
+    // Activate Emergency Sequence
+    function activateEmergency() {
+      alert("🚨 Emergency detected! Activating panic mode...");
+      document.getElementById("videoElement").style.display = "block";
+      navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+          document.getElementById("videoElement").srcObject = stream;
+        })
+        .catch(err => console.error("Error accessing camera:", err));
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(pos) {
+            fetch("/panic_mode", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                latitude: pos.coords.latitude,
+                longitude: pos.coords.longitude
+              })
+            })
+            .then(res => res.json())
+            .then(data => console.log(data.message))
+            .catch(err => console.error("Error:", err));
+          },
+          function() {
+            alert("Location access denied. Sending alert without location.");
+            fetch("/panic_mode", { method: "POST" });
+          }
+        );
+      } else {
+        alert("Geolocation not supported. Sending alert without location.");
+        fetch("/panic_mode", { method: "POST" });
+      }
+    }
+
+    // Stop Emergency Sequence
+    function stopEmergency() {
+      fetch("/stop_panic", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" }
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data.message);
+        alert("Panic mode stopped.");
+        document.getElementById("videoElement").style.display = "none";
+      })
+      .catch(err => console.error("Error stopping panic mode:", err));
+    }
+
+    // Bind panic button and start voice recognition on load
+    document.getElementById("panicButton").addEventListener("click", activateEmergency);
+    window.addEventListener("load", startListening);
+  </script>
+{% endblock %}

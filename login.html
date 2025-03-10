@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Login to Raksha</h2>
+  <div class="login-form">
+    <form method="POST">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit" class="btn">Login</button>
+    </form>
+    <div class="register-link">
+      Don't have an account? <a href="{{ url_for('register') }}">Register</a>
+    </div>
+  </div>
+{% endblock %}

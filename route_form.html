@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Find a Safe Route</h2>
+  <form action="{{ url_for('find_route') }}" method="POST">
+    <label for="start">Start Location:</label>
+    <input type="text" id="start" name="start" placeholder="Enter start location" required>
+
+    <label for="end">End Location:</label>
+    <input type="text" id="end" name="end" placeholder="Enter destination" required>
+
+    <button type="submit" class="btn">Find Route</button>
+  </form>
+{% endblock %}
